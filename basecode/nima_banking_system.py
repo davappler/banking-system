@@ -76,7 +76,7 @@ class Account:
 
     def withdraw(self, amount):
         # overload this function for current account to take care of overdraft limits
-        if(amount <= self.balance):
+        if amount <= self.balance:
             self.balance = self.balance - amount
         else:
             pass
@@ -94,12 +94,6 @@ class CurrentAccount(Account):
         super().__init__(balance)
         self.overdraft = overdraft
 
-    def withdraw(self,balance,amount):
-        if amount>self.balance:
-            print("Withdraw not possible")
-        else:
-            super().__init__(balance-amount)
-            print("withdraw successful") 
 
 
 
@@ -133,8 +127,8 @@ class BankingSystem:
 
     def user_logged_in(self,customer):
         print("Please select an option:")
-        print(" 1 - Customer summary")
-        print(" 2 - Financial summary")
+        print(" 1 - View Account")
+        print(" 2 - View summary")
         print(" 3 - Quit")
         correctOption=False
         while correctOption==False:
@@ -151,9 +145,47 @@ class BankingSystem:
             else:
                 print("Enter a valid option")
 
-    def view_account(self):
-        print("You have selected 1")
 
+
+    def view_account(self,customer):
+        print("-- Account list --")
+        print("Please select an option:")
+        i=0
+        for account in customer.accounts:
+            i+=1
+            if isinstance(account, CurrentAccount):
+                accountType="Current account: "
+            elif isinstance(account, SavingAccount):
+                accountType="Saving account: "
+
+            message=str(i)+" - "+accountType+str(account.balance)
+            print(message)
+        continueFromHere=False
+        while continueFromHere==False:
+            user_input=input("Enter a number to select your option:")
+            if int(user_input)<=i:
+                continueFromHere=True
+                self.display_selected_account_info(customer,i,accountType,account.balance)
+
+
+
+
+    def display_selected_account_info(self,customer,i,accountType,balance):
+        print("You selected "+str(i) +" - "+accountType+str(balance))
+        print("Please select an option:")
+        print("1 - Deposit")
+        print("2 - Withdraw")
+        print("3 - Go Back")
+        user_input=input("Enter a number to select your option:")
+        if user_input=="1":
+            amount=input("Enter the deposit amount: ")
+            customer.accounts[i-1].deposit(int(amount))
+            self.user_logged_in(customer)
+        elif user_input=="2":
+            amount=input("Enter the withdraw amount: ")
+            customer.accounts[i-1].withdraw(int(amount))
+            self.user_logged_in(customer)
+        
     def view_summary(self,customer):
         print("------------------------------------")
         print("Total number of accounts in the bank:",customer.get_total_accounts())

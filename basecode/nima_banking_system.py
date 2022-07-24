@@ -36,9 +36,14 @@ class Customer:
 
     # add a current account to self.accounts
     def add_current_account(self,balance, overdraft):
+        alreadyExists=False
         # only one current account allowed per user
         # Add an if here to check if there is an existing current account then dont add another one with instanceOf function in python
-        self.accounts.append(CurrentAccount(balance,overdraft))
+        for account in self.accounts:
+            alreadyExists=isinstance(account, CurrentAccount)
+        if(alreadyExists!=True):
+            self.accounts.append(CurrentAccount(balance,overdraft))
+            print("We are creatingggg a current account")    
 
     # add a saving account to self.accounts
     def add_saving_account(self,balance, interest):
@@ -46,7 +51,10 @@ class Customer:
 
     # return the total balance of all the accounts combined
     def get_total_balance(self):
-        pass
+        totalBalance=0
+        for account in self.accounts:
+            totalBalance+=account.balance
+        return totalBalance
 
     def get_total_accounts(self):
         return len(self.accounts)
@@ -86,8 +94,12 @@ class CurrentAccount(Account):
         super().__init__(balance)
         self.overdraft = overdraft
 
-    def withdraw(amount):
-        pass
+    def withdraw(self,balance,amount):
+        if amount>self.balance:
+            print("Withdraw not possible")
+        else:
+            super().__init__(balance-amount)
+            print("withdraw successful") 
 
 
 
@@ -108,25 +120,65 @@ class BankingSystem:
         self.customers[1].add_saving_account(4000,2.99)
         self.customers[2].add_saving_account(200,0.99)
         self.customers[2].add_saving_account(5000,4.99)
-        print("hahhahahahahahahahah")
+        print("-----------------------------------------------------")
         print(self.customers[0].username)
+        print(self.customers[0].accounts[0].balance)
+        print(self.customers[0].accounts[0].overdraft)
         # Do not add any parameter to this method.
         # Delete "pass" after adding code into this method.
+
+        
+
+
+
+    def user_logged_in(self,customer):
+        print("Please select an option:")
+        print(" 1 - Customer summary")
+        print(" 2 - Financial summary")
+        print(" 3 - Quit")
+        correctOption=False
+        while correctOption==False:
+            selectedOption = input("Enter a number for your option: ")
+            if selectedOption=="1":
+                self.view_account(customer)
+                correctOption=True
+            elif selectedOption=="2":
+                self.view_summary(customer)
+                correctOption=True
+            elif selectedOption=="3":
+                return
+                correctOption=True
+            else:
+                print("Enter a valid option")
+
+    def view_account(self):
+        print("You have selected 1")
+
+    def view_summary(self,customer):
+        print("------------------------------------")
+        print("Total number of accounts in the bank:",customer.get_total_accounts())
+        print("Total balance of all accounts in the bank:",customer.get_total_balance())
+        print("Address:",customer.address)
+        print("------------------------------------")
+
+
 
 
     def run_app(self):
         print("Your banking system should run by calling this method.")
         username = input("What is your username? ")
-        users_password = input("What is your password? ")
+        password = input("What is your password? ")
+        userLoggedIn=False
+        for customer in self.customers:
+            if username == customer.username and password==customer.password:
+                userLoggedIn=True
+                self.user_logged_in(customer)
+        # if userLoggedIn:
+            
 
-    def user_logged_in():
-        print("Please select an option:")
-        print(" 1 - Customer summary")
-        print(" 2 - Financial summary")
-        print(" 3 - Quit")
-        user_input = input("Enter a number for your option: ")
+
 
 
 
 p1=BankingSystem()
-# p1.run_app()
+p1.run_app()

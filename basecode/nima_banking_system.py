@@ -13,17 +13,7 @@ class Admin:
 
 
 
-
-
-
-
-
-
-
-
 # Customer and Admin
-
-
 
 
 class Customer:
@@ -43,11 +33,13 @@ class Customer:
             alreadyExists=isinstance(account, CurrentAccount)
         if(alreadyExists!=True):
             self.accounts.append(CurrentAccount(balance,overdraft))
-            print("We are creatingggg a current account")    
 
     # add a saving account to self.accounts
     def add_saving_account(self,balance, interest):
         self.accounts.append(SavingAccount(balance,interest))
+        # print("Printingggggg accounts list")
+        # for account in self.accounts:
+        #     print(account)
 
     # return the total balance of all the accounts combined
     def get_total_balance(self):
@@ -96,8 +88,6 @@ class CurrentAccount(Account):
 
 
 
-
-
 class BankingSystem:
 
     def __init__(self):
@@ -114,15 +104,8 @@ class BankingSystem:
         self.customers[1].add_saving_account(4000,2.99)
         self.customers[2].add_saving_account(200,0.99)
         self.customers[2].add_saving_account(5000,4.99)
-        print("-----------------------------------------------------")
-        print(self.customers[0].username)
-        print(self.customers[0].accounts[0].balance)
-        print(self.customers[0].accounts[0].overdraft)
         # Do not add any parameter to this method.
         # Delete "pass" after adding code into this method.
-
-        
-
 
 
     def user_logged_in(self,customer):
@@ -169,7 +152,6 @@ class BankingSystem:
 
 
 
-
     def display_selected_account_info(self,customer,i,accountType,balance):
         print("You selected "+str(i) +" - "+accountType+str(balance))
         print("Please select an option:")
@@ -185,7 +167,11 @@ class BankingSystem:
             amount=input("Enter the withdraw amount: ")
             customer.accounts[i-1].withdraw(int(amount))
             self.user_logged_in(customer)
-        
+        else:
+            self.user_logged_in(customer)
+
+
+
     def view_summary(self,customer):
         print("------------------------------------")
         print("Total number of accounts in the bank:",customer.get_total_accounts())
@@ -194,6 +180,49 @@ class BankingSystem:
         print("------------------------------------")
 
 
+    def Admin_logged_in(self):
+        print("1 - Customer summary")
+        print("2 - Financial forecast")
+        print("3 - Transfer Money - GUI")
+        print("4 - Account management - GUI")
+        admin_input=input("Enter a number to select your option: ")
+        if admin_input=="1":
+            self.print_user_data_for_admin()
+        elif admin_input=="2":
+            self.financial_forecast()
+        else:
+            pass
+
+
+    def print_user_data_for_admin(self):
+        for customer in self.customers:
+            print("- "+customer.username) 
+            print("- "+customer.address) 
+
+            for account in customer.accounts:
+                if isinstance(account, CurrentAccount):
+                    accountType="Current account: "
+                elif isinstance(account, SavingAccount):
+                    accountType="Saving account: "
+
+                message="- "+accountType+str(account.balance)
+                print(message)
+            print('-------------------')
+
+
+    def financial_forecast(self):
+        for customer in self.customers:
+            print("- "+customer.username)
+            print("- "+str(customer.get_total_accounts()))
+            totalForecastMoney=0
+            for account in customer.accounts:
+                if isinstance(account, CurrentAccount):
+                    totalForecastMoney+=account.balance
+                elif isinstance(account, SavingAccount):
+                    totalForecastMoney+=account.balance+account.balance*account.interest
+
+                message="- total forecast money: "+str(totalForecastMoney)
+                print(message)
 
 
     def run_app(self):
@@ -205,7 +234,8 @@ class BankingSystem:
             if username == customer.username and password==customer.password:
                 userLoggedIn=True
                 self.user_logged_in(customer)
-        # if userLoggedIn:
+        if username == self.admin.name and password==self.admin.password:
+            self.Admin_logged_in()
             
 
 

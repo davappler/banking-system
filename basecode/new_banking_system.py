@@ -109,6 +109,8 @@ class BankingSystem:
 
 
     def user_logged_in(self, customer):
+        print("---- You are logged in ---- ")
+        print(" ")
         print("Please select an option:")
         print(" 1 - View Account")
         print(" 2 - View summary")
@@ -131,7 +133,9 @@ class BankingSystem:
 
 
     def view_account(self,customer):
+        print(" ")
         print("-- Account list --")
+        print(" ")
         print("Please select an option:")
         i=0
         for account in customer.accounts:
@@ -145,30 +149,42 @@ class BankingSystem:
             print(message)
         continueFromHere=False
         while continueFromHere==False:
+            print("")
             user_input=input("Enter a number to select your option:")
             if int(user_input)<=i:
                 continueFromHere=True
                 self.display_selected_account_info(customer,i,accountType,account.balance)
+            else:
+                print("Please enter a valid option")
 
 
 
     def display_selected_account_info(self,customer,i,accountType,balance):
         print("You selected "+str(i) +" - "+accountType+str(balance))
-        print("Please select an option:")
-        print("1 - Deposit")
-        print("2 - Withdraw")
-        print("3 - Go Back")
-        user_input=input("Enter a number to select your option:")
-        if user_input=="1":
-            amount=input("Enter the deposit amount: ")
-            customer.accounts[i-1].deposit(int(amount))
-            self.user_logged_in(customer)
-        elif user_input=="2":
-            amount=input("Enter the withdraw amount: ")
-            customer.accounts[i-1].withdraw(int(amount))
-            self.user_logged_in(customer)
-        else:
-            self.user_logged_in(customer)
+        continueFromHere=False
+        while continueFromHere==False:
+            print("------------------------------------")
+            print("Please select an option:")
+            print("1 - Deposit")
+            print("2 - Withdraw")
+            print("3 - Go Back")
+            user_input=input("Enter a number to select your option:")
+            if user_input=="1":
+                amount=input("Enter the deposit amount: ")
+                customer.accounts[i-1].deposit(int(amount))
+                self.user_logged_in(customer)
+                continueFromHere=True
+            elif user_input=="2":
+                amount=input("Enter the withdraw amount: ")
+                customer.accounts[i-1].withdraw(int(amount))
+                self.user_logged_in(customer)
+                continueFromHere=True
+            elif user_input=="3":
+                self.user_logged_in(customer)
+                continueFromHere=True
+            else:
+                print("")
+                print('-----Enter a valid option----')
 
 
 
@@ -225,9 +241,9 @@ class BankingSystem:
 
 
     def run_app(self):
-        print("Your banking system should run by calling this method.")
         userLoggedIn = False
 
+        print("----------Welcome to the banking system----------")
         while userLoggedIn == False:
             username = input("What is your username? ")
             password = input("What is your password? ")

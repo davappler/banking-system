@@ -5,11 +5,8 @@ Created on Mon Jul 11 20:09:50 2022
 @author: sanit
 """
 
-
 class BankingSystem:
-    
-   
-            
+
     def __init__(self):
         self.username_list = ["Boris", "Chloe", "David"]
         self.usernames_dictionary = {"Arthur" : "123", "Boris" : "ABC", "Chloe" : "1+x" , "David" : "aBC"}
@@ -19,31 +16,28 @@ class BankingSystem:
         self.acc_types = {"Boris" : "current account", "Chloe" : ["current account","savings account"], "David" : ["savings account","savings account"]}
         self.overdraft = {"Boris" : 100, "Chloe" : [100,0]}
         self.interest = {"Chloe" : [0,2.99], "David" : [0.99,4.99]}
-    
-             
-                         
-    
+
     def run_app(self):
         while True:
             username = input("What is your username? ")
             users_password = input("What is your password? ")
-            
+
             if username in self.usernames_dictionary:
-                
+
                 if self.usernames_dictionary[username] == users_password:
                     print("You are logged in")
                     break
                 else:
                     print("Incorrect password")
 
-                
+
         if self.acts_types[username] == "admin":
             print("Please select an option:")
             print(" 1 - Customer summary")
             print(" 2 - Financial summary")
             user_input = input("Enter a number for your option: ")
             if user_input == "1":
-                
+
                 print("Boris account 1 -")
                 print(self.username_list[0])
                 print(self.address["Boris"])
@@ -73,8 +67,8 @@ class BankingSystem:
                 print((self.balance["David"][1]))
                 print(self.acc_types["David"][1])
                 print(self.interest["David"][1])
-                
-            
+
+
             elif user_input == "2":
                 print("Boris' account --")
                 print(self.username_list[0])
@@ -98,30 +92,22 @@ class BankingSystem:
                 forecast_david3 = self.balance["David"][1] * (self.interest["David"][1] / 100)
                 forecast_david4 = self.balance["David"][1] + forecast_david3
                 print(forecast_david4 + forecast_david2)
-                
-                
-                
-          
-            
-          
-            
+
         elif username == "Boris":
-            
             while True:
-            
             # how do we run this code underneath?
                 print("Please select an option:")
                 print(" 1 - View account")
                 print(" 2 - View summary")
                 print(" 3 - Quit")
                 user_input = input("Enter a number for your option: ")
-        
+
                 if user_input == "1":
                     print("--Account list--")
                     print("Please select an option")
                     print(" 1 - Current account:£", self.balance["Boris"])
-                    boris_option = input("Enter a number to selection your option: ") 
-            
+                    boris_option = input("Enter a number to selection your option: ")
+
                     if boris_option == "1":
                         print("You selected 1 - Current account:", )
                         print("Please select an option")
@@ -129,50 +115,44 @@ class BankingSystem:
                         print(" 2 - Withdraw")
                         print(" 3 - Go back")
                         boris_option_var = input("Enter a number to select your option: ")
-                        
-            
-            
+
                         if boris_option_var == "1":
                             deposit_amount =  int(input("Please enter how you'd like to deposit: "))
-                            new_balance = deposit_amount + self.balance["Boris"]   
+                            new_balance = deposit_amount + self.balance["Boris"]
                             self.balance["Boris"] = new_balance
-                           
-                
-                        elif boris_option_var == "2": 
+
+                        elif boris_option_var == "2":
                             withdraw_amount =  int(input("Please enter how you'd like to withdraw: "))
-                            new_balance = withdraw_amount - self.balance["Boris"]   
+                            new_balance = withdraw_amount - self.balance["Boris"]
                             self.balance["Boris"] = new_balance
-                            
-                        
+
                         elif boris_option_var == "3":
                             pass
-                        
+
                 elif user_input == "2":
                     print("There are",len(self.acc_types["Boris"]),"account open in this bank account.")
                     print("The total balance of all accounts is :£",(self.balance["Boris"]))
                     print(self.address["Boris"])
-                    break   
-                        
+                    break
+
                 elif user_input == "3":
                     break
-                
+
         elif username == "Chloe":
-            
             while True:
-            
             # how do we run this code underneath?
                 print("Please select an option:")
                 print(" 1 - View account")
                 print(" 2 - View summary")
                 print(" 3 - Quit")
                 user_input = input("Enter a number for your option: ")
-        
+
                 if user_input == "1":
                     print("--Account list--")
                     print("Please select an option")
                     print(" 1 - Current account:£", self.balance["Chloe"])
-                    chloe_option = input("Enter a number to selection your option: ") 
-            
+                    chloe_option = input("Enter a number to selection your option: ")
+
                     if chloe_option == "1":
                         print("You selected 1 - Current account:", )
                         print("Please select an option")
@@ -180,51 +160,44 @@ class BankingSystem:
                         print(" 2 - Withdraw")
                         print(" 3 - Go back")
                         chloe_option_var = input("Enter a number to select your option: ")
-                        
-            
-            
+
                         if chloe_option_var == "1":
                             deposit_amount =  int(input("Please enter how you'd like to deposit: "))
-                            new_balance = deposit_amount + self.balance["Chloe"]   
+                            new_balance = deposit_amount + self.balance["Chloe"]
                             self.balance["Chloe"] = new_balance
-                           
-                
-                        elif chloe_option_var == "2": 
+
+                        elif chloe_option_var == "2":
                             withdraw_amount =  int(input("Please enter how you'd like to withdraw: "))
-                            new_balance = withdraw_amount - self.balance["Chloe"]   
+                            new_balance = withdraw_amount - self.balance["Chloe"]
                             self.balance["Chloe"] = new_balance
-                            
-                        
+
                         elif chloe_option_var == "3":
                             pass
-                        
+
                 elif user_input == "2":
                     print("There are",len(self.acc_types["Chloe"]),"account open in this bank account.")
                     print("The total balance of all accounts is :£",sum(self.balance["Chloe"]))
                     print(self.address["Chloe"])
-                    break   
-                        
+                    break
+
                 elif user_input == "3":
                     break
-                
-            
+
         elif username == "David":
-             
              while True:
-             
              # how do we run this code underneath?
                  print("Please select an option:")
                  print(" 1 - View account")
                  print(" 2 - View summary")
                  print(" 3 - Quit")
                  user_input = input("Enter a number for your option: ")
-         
+
                  if user_input == "1":
                      print("--Account list--")
                      print("Please select an option")
                      print(" 1 - Current account:£", self.balance["David"])
-                     david_option = input("Enter a number to selection your option: ") 
-             
+                     david_option = input("Enter a number to selection your option: ")
+
                      if david_option == "1":
                          print("You selected 1 - Current account:", )
                          print("Please select an option")
@@ -232,29 +205,28 @@ class BankingSystem:
                          print(" 2 - Withdraw")
                          print(" 3 - Go back")
                          david_option_var = input("Enter a number to select your option: ")
-                         
-             
-             
+
                          if david_option_var == "1":
                              deposit_amount =  int(input("Please enter how you'd like to deposit: "))
-                             new_balance = deposit_amount + self.balance["David"]   
+                             new_balance = deposit_amount + self.balance["David"]
                              self.balance["David"] = new_balance
-                            
-                 
-                         elif david_option_var == "2": 
+
+                         elif david_option_var == "2":
                              withdraw_amount =  int(input("Please enter how you'd like to withdraw: "))
-                             new_balance = withdraw_amount - self.balance["David"]   
+                             new_balance = withdraw_amount - self.balance["David"]
                              self.balance["David"] = new_balance
-                             
-                         
+
                          elif david_option_var == "3":
                              pass
-                         
+
                  elif user_input == "2":
                      print("There are",len(self.acc_types["David"]),"account open in this bank account.")
                      print("The total balance of all accounts is :£",sum(self.balance["David"]))
                      print(self.address["David"])
-                     break   
-                         
+                     break
+
                  elif user_input == "3":
                      break
+
+p1=BankingSystem()
+p1.run_app()

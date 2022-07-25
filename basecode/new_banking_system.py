@@ -108,7 +108,7 @@ class BankingSystem:
         # Delete "pass" after adding code into this method.
 
 
-    def user_logged_in(self,customer):
+    def user_logged_in(self, customer):
         print("Please select an option:")
         print(" 1 - View Account")
         print(" 2 - View summary")
@@ -196,16 +196,15 @@ class BankingSystem:
 
     def print_user_data_for_admin(self):
         for customer in self.customers:
-            print("- "+customer.username) 
-            print("- "+customer.address) 
+            print("- "+customer.username)
+            print("- "+customer.address)
 
             for account in customer.accounts:
                 if isinstance(account, CurrentAccount):
-                    accountType="Current account: "
+                    message="- Current account: Balance - " + str(account.balance) + ", Overdraft - " + str(account.overdraft)
                 elif isinstance(account, SavingAccount):
-                    accountType="Saving account: "
+                    message="- Savings account: Balance - " + str(account.balance) + ", Interest - " + str(account.interest)
 
-                message="- "+accountType+str(account.balance)
                 print(message)
             print('-------------------')
 
@@ -227,16 +226,24 @@ class BankingSystem:
 
     def run_app(self):
         print("Your banking system should run by calling this method.")
-        username = input("What is your username? ")
-        password = input("What is your password? ")
-        userLoggedIn=False
-        for customer in self.customers:
-            if username == customer.username and password==customer.password:
-                userLoggedIn=True
-                self.user_logged_in(customer)
-        if username == self.admin.name and password==self.admin.password:
-            self.Admin_logged_in()
-            
+        userLoggedIn = False
+
+        while userLoggedIn == False:
+            username = input("What is your username? ")
+            password = input("What is your password? ")
+
+            for customer in self.customers:
+                if username == customer.username and password == customer.password:
+                    userLoggedIn = True
+                    self.user_logged_in(customer)
+
+            if username == self.admin.name and password == self.admin.password:
+                userLoggedIn = True
+                self.Admin_logged_in()
+
+            if userLoggedIn == False:
+                print("Incorrect username or password. Try again.")
+
 
 
 

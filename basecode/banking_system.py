@@ -239,9 +239,6 @@ class BankingSystem:
                 userLoggedIn = True
                 self.Admin_logged_in()
 
-            # if userLoggedIn == False:
-            #     print("Incorrect username or password. Try again.")
+            if userLoggedIn == False:
+                print("Error, incorrect details.")
             
-
-p1=BankingSystem()
-p1.run_app()
